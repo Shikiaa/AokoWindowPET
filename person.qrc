@@ -1,0 +1,41 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/aokohalf/01.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/1.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/2.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/3.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/4.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/5.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/6.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/7.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/8.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/9.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/10.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/11.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/12.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/13.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/14.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/15.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/16.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/17.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/18.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/19.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/20.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/21.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/22.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/23.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/24.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/25.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/26.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/27.png</file>
+        <file>assets/aokohalf/01scarf/01scanf_all/28.png</file>
+        <file>assets/icon/aoko1.png</file>
+        <file>assets/icon/aoko2.png</file>
+        <file>assets/icon/aoko3.png</file>
+        <file>assets/icon/lock.png</file>
+        <file>assets/icon/unlock.png</file>
+        <file>assets/aokohalf/02.png</file>
+        <file>assets/aokohalf/03.png</file>
+        <file>assets/aokohalf/04.png</file>
+    </qresource>
+</RCC>
