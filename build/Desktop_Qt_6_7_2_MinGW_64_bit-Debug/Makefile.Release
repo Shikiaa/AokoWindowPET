@@ -19,7 +19,7 @@ CXXFLAGS      = -fno-keep-inline-dllexport -O2 -std=gnu++1z -Wall -Wextra -Wextr
 INCPATH       = -I../../../MyPet -I. -I../../../../QT/6.7.2/mingw_64/include -I../../../../QT/6.7.2/mingw_64/include/QtWidgets -I../../../../QT/6.7.2/mingw_64/include/QtGui -I../../../../QT/6.7.2/mingw_64/include/QtCore -Irelease -I. -I/include -I../../../../QT/6.7.2/mingw_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-s -Wl,-subsystem,windows -mthreads
-LIBS        =        D:\QT\6.7.2\mingw_64\lib\libQt6Widgets.a D:\QT\6.7.2\mingw_64\lib\libQt6Gui.a D:\QT\6.7.2\mingw_64\lib\libQt6Core.a -lmingw32 D:\QT\6.7.2\mingw_64\lib\libQt6EntryPoint.a -lshell32  
+LIBS        =        D:\QT\6.7.2\mingw_64\lib\libQt6Widgets.a D:\QT\6.7.2\mingw_64\lib\libQt6Gui.a D:\QT\6.7.2\mingw_64\lib\libQt6Core.a release\logo_res.o -lmingw32 D:\QT\6.7.2\mingw_64\lib\libQt6EntryPoint.a -lshell32  
 QMAKE         = D:\QT\6.7.2\mingw_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -40,7 +40,7 @@ IDC           = idc
 IDL           = midl
 ZIP           = zip -r -9
 DEF_FILE      = 
-RES_FILE      = 
+RES_FILE      = release\logo_res.o
 SED           = $(QMAKE) -install sed
 MOVE          = move
 
@@ -76,8 +76,11 @@ DESTDIR_TARGET = release\MyPet.exe
 first: all
 all: Makefile.Release  release/MyPet.exe
 
-release/MyPet.exe: D:/QT/6.7.2/mingw_64/lib/libQt6Widgets.a D:/QT/6.7.2/mingw_64/lib/libQt6Gui.a D:/QT/6.7.2/mingw_64/lib/libQt6Core.a D:/QT/6.7.2/mingw_64/lib/libQt6EntryPoint.a ui_mainwindow.h $(OBJECTS) 
+release/MyPet.exe: D:/QT/6.7.2/mingw_64/lib/libQt6Widgets.a D:/QT/6.7.2/mingw_64/lib/libQt6Gui.a D:/QT/6.7.2/mingw_64/lib/libQt6Core.a D:/QT/6.7.2/mingw_64/lib/libQt6EntryPoint.a ui_mainwindow.h $(OBJECTS) release/logo_res.o
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS) $(LIBS)
+
+release/logo_res.o: ../../logo.rc
+	windres -i ..\..\logo.rc -o release\logo_res.o --include-dir=./../.. $(DEFINES)
 
 qmake: FORCE
 	@$(QMAKE) -o Makefile.Release ..\..\MyPet.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -89,6 +92,7 @@ dist:
 
 clean: compiler_clean 
 	-$(DEL_FILE) release\changePosition.o release\main.o release\mainwindow.o release\setMenu.o release\qrc_person.o release\moc_mainwindow.o
+	-$(DEL_FILE) release\logo_res.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -110,6 +114,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) release\qrc_person.cpp
 release/qrc_person.cpp: ../../person.qrc \
 		../../../../QT/6.7.2/mingw_64/bin/rcc.exe \
+		../../mainIconBig.ico \
 		../../assets/icon/aoko3.png \
 		../../assets/icon/unlock.png \
 		../../assets/icon/lock.png \
@@ -159,8 +164,8 @@ compiler_moc_header_make_all: release/moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) release\moc_mainwindow.cpp
 release/moc_mainwindow.cpp: ../../mainwindow.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmainwindow.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsDropShadowEffect \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicseffect.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtguiglobal.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qglobal.h \
@@ -211,15 +216,12 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtguiexports.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobjectdefs.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qnamespace.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtmetamacros.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobjectdefs_impl.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs_win.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qstring.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qchar.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qstringview.h \
@@ -269,26 +271,31 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qscopeguard.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject_impl.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbindingstorage.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qmargins.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/q23utility.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qaction.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qkeysequence.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qicon.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qsize.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixmap.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpaintdevice.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrect.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpoint.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/q23utility.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrect.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qmargins.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qsize.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcolor.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qrgb.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qrgba64.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbrush.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qimage.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpaintdevice.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs_win.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixelformat.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtransform.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpolygon.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qregion.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qline.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QPropertyAnimation \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpropertyanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariantanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qabstractanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qeasingcurve.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariant.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qdebug.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtextstream.h \
@@ -300,15 +307,7 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qset.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qhash.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvarlengtharray.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpalette.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbrush.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfont.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qendian.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontmetrics.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontinfo.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qsizepolicy.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcursor.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbitmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QContextMenuEvent \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qevent.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qiodevice.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qurl.h \
@@ -346,32 +345,40 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qinputmethod.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qlocale.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qguiapplication_platform.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtabwidget.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QTimer \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtimer.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qkeysequence.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QDesktopServices \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qdesktopservices.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QRandomGenerator \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrandom.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QActionGroup \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qactiongroup.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qaction.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qicon.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QMouseEvent \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsDropShadowEffect \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmainwindow.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpalette.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfont.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qendian.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontmetrics.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontinfo.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qsizepolicy.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcursor.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbitmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtabwidget.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QPushButton \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qabstractbutton.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMenu \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenu.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QContextMenuEvent \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QWidget \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QPropertyAnimation \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpropertyanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariantanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qabstractanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qeasingcurve.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QScreen \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QProcess \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qprocess.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QDesktopServices \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qdesktopservices.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QActionGroup \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qactiongroup.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QWidget \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QScreen \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QTimer \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMenu \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenu.h \
 		release/moc_predefs.h \
 		../../../../QT/6.7.2/mingw_64/bin/moc.exe
 	D:\QT\6.7.2\mingw_64\bin\moc.exe $(DEFINES) --include D:/Qt_project/MyPet/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/release/moc_predefs.h -ID:/QT/6.7.2/mingw_64/mkspecs/win32-g++ -ID:/Qt_project/MyPet -ID:/QT/6.7.2/mingw_64/include -ID:/QT/6.7.2/mingw_64/include/QtWidgets -ID:/QT/6.7.2/mingw_64/include/QtGui -ID:/QT/6.7.2/mingw_64/include/QtCore -I. -ID:/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -ID:/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -ID:/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -ID:/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -ID:/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -ID:/QT/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\..\mainwindow.h -o release\moc_mainwindow.cpp
@@ -400,8 +407,8 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 ####### Compile
 
 release/changePosition.o: ../../changePosition.cpp ../../mainwindow.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmainwindow.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsDropShadowEffect \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicseffect.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtguiglobal.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qglobal.h \
@@ -452,15 +459,12 @@ release/changePosition.o: ../../changePosition.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtguiexports.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobjectdefs.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qnamespace.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtmetamacros.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobjectdefs_impl.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs_win.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qstring.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qchar.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qstringview.h \
@@ -510,26 +514,31 @@ release/changePosition.o: ../../changePosition.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qscopeguard.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject_impl.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbindingstorage.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qmargins.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/q23utility.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qaction.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qkeysequence.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qicon.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qsize.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixmap.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpaintdevice.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrect.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpoint.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/q23utility.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrect.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qmargins.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qsize.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcolor.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qrgb.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qrgba64.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbrush.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qimage.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpaintdevice.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs_win.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixelformat.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtransform.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpolygon.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qregion.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qline.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QPropertyAnimation \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpropertyanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariantanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qabstractanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qeasingcurve.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariant.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qdebug.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtextstream.h \
@@ -541,15 +550,7 @@ release/changePosition.o: ../../changePosition.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qset.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qhash.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvarlengtharray.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpalette.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbrush.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfont.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qendian.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontmetrics.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontinfo.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qsizepolicy.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcursor.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbitmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QContextMenuEvent \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qevent.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qiodevice.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qurl.h \
@@ -587,46 +588,45 @@ release/changePosition.o: ../../changePosition.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qinputmethod.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qlocale.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qguiapplication_platform.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtabwidget.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QTimer \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtimer.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qkeysequence.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QDesktopServices \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qdesktopservices.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QRandomGenerator \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrandom.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QActionGroup \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qactiongroup.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qaction.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qicon.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QMouseEvent \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsDropShadowEffect \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmainwindow.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpalette.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfont.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qendian.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontmetrics.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontinfo.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qsizepolicy.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcursor.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbitmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtabwidget.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QPushButton \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qabstractbutton.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMenu \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenu.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QContextMenuEvent \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QWidget \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QPropertyAnimation \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpropertyanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariantanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qabstractanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qeasingcurve.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QScreen \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QProcess \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qprocess.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QDesktopServices \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qdesktopservices.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QActionGroup \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qactiongroup.h \
-		ui_mainwindow.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QVariant \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QApplication \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qapplication.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QLabel \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qlabel.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qframe.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpicture.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtextdocument.h
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QWidget \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QScreen \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QTimer \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMenu \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenu.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\changePosition.o ..\..\changePosition.cpp
 
 release/main.o: ../../main.cpp ../../mainwindow.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmainwindow.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsDropShadowEffect \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicseffect.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtguiglobal.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qglobal.h \
@@ -677,15 +677,12 @@ release/main.o: ../../main.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtguiexports.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobjectdefs.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qnamespace.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtmetamacros.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobjectdefs_impl.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs_win.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qstring.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qchar.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qstringview.h \
@@ -735,26 +732,31 @@ release/main.o: ../../main.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qscopeguard.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject_impl.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbindingstorage.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qmargins.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/q23utility.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qaction.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qkeysequence.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qicon.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qsize.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixmap.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpaintdevice.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrect.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpoint.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/q23utility.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrect.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qmargins.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qsize.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcolor.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qrgb.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qrgba64.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbrush.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qimage.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpaintdevice.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs_win.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixelformat.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtransform.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpolygon.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qregion.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qline.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QPropertyAnimation \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpropertyanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariantanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qabstractanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qeasingcurve.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariant.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qdebug.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtextstream.h \
@@ -766,15 +768,7 @@ release/main.o: ../../main.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qset.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qhash.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvarlengtharray.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpalette.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbrush.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfont.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qendian.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontmetrics.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontinfo.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qsizepolicy.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcursor.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbitmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QContextMenuEvent \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qevent.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qiodevice.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qurl.h \
@@ -812,39 +806,47 @@ release/main.o: ../../main.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qinputmethod.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qlocale.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qguiapplication_platform.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtabwidget.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QTimer \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtimer.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qkeysequence.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QDesktopServices \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qdesktopservices.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QRandomGenerator \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrandom.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QActionGroup \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qactiongroup.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qaction.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qicon.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QMouseEvent \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsDropShadowEffect \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmainwindow.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpalette.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfont.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qendian.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontmetrics.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontinfo.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qsizepolicy.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcursor.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbitmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtabwidget.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QPushButton \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qabstractbutton.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMenu \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenu.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QContextMenuEvent \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QWidget \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QPropertyAnimation \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpropertyanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariantanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qabstractanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qeasingcurve.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QScreen \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QProcess \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qprocess.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QDesktopServices \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qdesktopservices.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QActionGroup \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qactiongroup.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QWidget \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QScreen \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QTimer \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMenu \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenu.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QApplication \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\..\main.cpp
 
 release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmainwindow.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsDropShadowEffect \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicseffect.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtguiglobal.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qglobal.h \
@@ -895,15 +897,12 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtguiexports.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobjectdefs.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qnamespace.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtmetamacros.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobjectdefs_impl.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs_win.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qstring.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qchar.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qstringview.h \
@@ -953,26 +952,31 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qscopeguard.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject_impl.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbindingstorage.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qmargins.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/q23utility.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qaction.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qkeysequence.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qicon.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qsize.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixmap.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpaintdevice.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrect.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpoint.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/q23utility.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrect.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qmargins.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qsize.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcolor.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qrgb.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qrgba64.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbrush.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qimage.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpaintdevice.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs_win.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixelformat.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtransform.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpolygon.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qregion.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qline.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QPropertyAnimation \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpropertyanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariantanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qabstractanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qeasingcurve.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariant.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qdebug.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtextstream.h \
@@ -984,15 +988,7 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qset.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qhash.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvarlengtharray.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpalette.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbrush.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfont.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qendian.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontmetrics.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontinfo.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qsizepolicy.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcursor.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbitmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QContextMenuEvent \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qevent.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qiodevice.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qurl.h \
@@ -1030,32 +1026,40 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qinputmethod.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qlocale.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qguiapplication_platform.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtabwidget.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QTimer \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtimer.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qkeysequence.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QDesktopServices \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qdesktopservices.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QRandomGenerator \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrandom.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QActionGroup \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qactiongroup.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qaction.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qicon.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QMouseEvent \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsDropShadowEffect \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmainwindow.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpalette.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfont.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qendian.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontmetrics.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontinfo.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qsizepolicy.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcursor.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbitmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtabwidget.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QPushButton \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qabstractbutton.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMenu \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenu.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QContextMenuEvent \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QWidget \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QPropertyAnimation \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpropertyanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariantanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qabstractanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qeasingcurve.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QScreen \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QProcess \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qprocess.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QDesktopServices \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qdesktopservices.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QActionGroup \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qactiongroup.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QWidget \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QScreen \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QTimer \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMenu \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenu.h \
 		ui_mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QVariant \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QApplication \
@@ -1068,8 +1072,8 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\..\mainwindow.cpp
 
 release/setMenu.o: ../../setMenu.cpp ../../mainwindow.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmainwindow.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsDropShadowEffect \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicseffect.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtguiglobal.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qglobal.h \
@@ -1120,15 +1124,12 @@ release/setMenu.o: ../../setMenu.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtguiexports.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobjectdefs.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qnamespace.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtmetamacros.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobjectdefs_impl.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs_win.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qstring.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qchar.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qstringview.h \
@@ -1178,26 +1179,31 @@ release/setMenu.o: ../../setMenu.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qscopeguard.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qobject_impl.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbindingstorage.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qmargins.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/q23utility.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qaction.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qkeysequence.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qicon.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qsize.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixmap.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpaintdevice.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrect.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpoint.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/q23utility.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrect.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qmargins.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qsize.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcolor.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qrgb.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qrgba64.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbrush.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qimage.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpaintdevice.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qwindowdefs_win.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixelformat.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qtransform.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpolygon.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qregion.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qline.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpixmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qshareddata.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QPropertyAnimation \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpropertyanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariantanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qabstractanimation.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qeasingcurve.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariant.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qdebug.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtextstream.h \
@@ -1209,15 +1215,7 @@ release/setMenu.o: ../../setMenu.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qset.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qhash.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvarlengtharray.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpalette.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbrush.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfont.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qendian.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontmetrics.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontinfo.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qsizepolicy.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcursor.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbitmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QContextMenuEvent \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qevent.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qiodevice.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qurl.h \
@@ -1255,32 +1253,40 @@ release/setMenu.o: ../../setMenu.cpp ../../mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qinputmethod.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qlocale.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qguiapplication_platform.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtabwidget.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QTimer \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtimer.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qkeysequence.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QDesktopServices \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qdesktopservices.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QRandomGenerator \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qrandom.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QActionGroup \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qactiongroup.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qaction.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qicon.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QMouseEvent \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsDropShadowEffect \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmainwindow.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qpalette.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfont.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qendian.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontmetrics.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qfontinfo.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qsizepolicy.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qcursor.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qbitmap.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtabwidget.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QPushButton \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qabstractbutton.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMenu \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenu.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QContextMenuEvent \
-		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QWidget \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QPropertyAnimation \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qpropertyanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qvariantanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qabstractanimation.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qeasingcurve.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QScreen \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QProcess \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qprocess.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QDesktopServices \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qdesktopservices.h \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QActionGroup \
-		../../../../../../QT/6.7.2/mingw_64/include/QtGui/qactiongroup.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QWidget \
+		../../../../../../QT/6.7.2/mingw_64/include/QtGui/QScreen \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QTimer \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qtimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtCore/qbasictimer.h \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMenu \
+		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenu.h \
 		ui_mainwindow.h \
 		../../../../../../QT/6.7.2/mingw_64/include/QtCore/QVariant \
 		../../../../../../QT/6.7.2/mingw_64/include/QtWidgets/QApplication \

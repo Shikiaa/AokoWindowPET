@@ -68,9 +68,6 @@ void MainWindow::randomMove(bool checked){
 
     });
 
-
-
-
 }
 
 

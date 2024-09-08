@@ -19,7 +19,7 @@ CXXFLAGS      = -fno-keep-inline-dllexport -O2 -std=gnu++1z -Wall -Wextra -Wextr
 INCPATH       = -I../../../MyPet -I. -I../../../../QT/6.7.2/mingw_64/include -I../../../../QT/6.7.2/mingw_64/include/QtWidgets -I../../../../QT/6.7.2/mingw_64/include/QtGui -I../../../../QT/6.7.2/mingw_64/include/QtCore -Irelease -I. -I/include -I../../../../QT/6.7.2/mingw_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-s -Wl,-subsystem,windows -mthreads
-LIBS        =        D:\QT\6.7.2\mingw_64\lib\libQt6Widgets.a D:\QT\6.7.2\mingw_64\lib\libQt6Gui.a D:\QT\6.7.2\mingw_64\lib\libQt6Core.a -lmingw32 D:\QT\6.7.2\mingw_64\lib\libQt6EntryPoint.a -lshell32  
+LIBS        =        D:\QT\6.7.2\mingw_64\lib\libQt6Widgets.a D:\QT\6.7.2\mingw_64\lib\libQt6Gui.a D:\QT\6.7.2\mingw_64\lib\libQt6Core.a release\logo_res.o -lmingw32 D:\QT\6.7.2\mingw_64\lib\libQt6EntryPoint.a -lshell32  
 QMAKE         = D:\QT\6.7.2\mingw_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -40,7 +40,7 @@ IDC           = idc
 IDL           = midl
 ZIP           = zip -r -9
 DEF_FILE      = 
-RES_FILE      = 
+RES_FILE      = release\logo_res.o
 SED           = $(QMAKE) -install sed
 MOVE          = move
 
@@ -76,8 +76,11 @@ DESTDIR_TARGET = release\MyPet.exe
 first: all
 all: Makefile.Release  release/MyPet.exe
 
-release/MyPet.exe: D:/QT/6.7.2/mingw_64/lib/libQt6Widgets.a D:/QT/6.7.2/mingw_64/lib/libQt6Gui.a D:/QT/6.7.2/mingw_64/lib/libQt6Core.a D:/QT/6.7.2/mingw_64/lib/libQt6EntryPoint.a ui_mainwindow.h $(OBJECTS) 
+release/MyPet.exe: D:/QT/6.7.2/mingw_64/lib/libQt6Widgets.a D:/QT/6.7.2/mingw_64/lib/libQt6Gui.a D:/QT/6.7.2/mingw_64/lib/libQt6Core.a D:/QT/6.7.2/mingw_64/lib/libQt6EntryPoint.a ui_mainwindow.h $(OBJECTS) release/logo_res.o
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS) $(LIBS)
+
+release/logo_res.o: ../../logo.rc
+	windres -i ..\..\logo.rc -o release\logo_res.o --include-dir=./../.. $(DEFINES)
 
 qmake: FORCE
 	@$(QMAKE) -o Makefile.Release ..\..\MyPet.pro -spec win32-g++ "CONFIG+=qtquickcompiler"
@@ -89,6 +92,7 @@ dist:
 
 clean: compiler_clean 
 	-$(DEL_FILE) release\changePosition.o release\main.o release\mainwindow.o release\setMenu.o release\qrc_person.o release\moc_mainwindow.o
+	-$(DEL_FILE) release\logo_res.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -110,6 +114,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) release\qrc_person.cpp
 release/qrc_person.cpp: ../../person.qrc \
 		../../../../QT/6.7.2/mingw_64/bin/rcc.exe \
+		../../mainIconBig.ico \
 		../../assets/icon/aoko3.png \
 		../../assets/icon/unlock.png \
 		../../assets/icon/lock.png \

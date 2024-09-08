@@ -37,5 +37,6 @@
         <file>assets/aokohalf/02.png</file>
         <file>assets/aokohalf/03.png</file>
         <file>assets/aokohalf/04.png</file>
+        <file>mainIconBig.ico</file>
     </qresource>
 </RCC>
