@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-//#include "ui_mainwindow.h"
+#include "ui_mainwindow.h"
 
 
     //左screenGeometry.x(),
@@ -38,8 +38,16 @@
 void MainWindow::randomMove(bool checked){
 
 
+
     if(!checked)
-    animation_random_move->destroyed();
+    {
+        animation_random_move->stop();
+        actionFixedLocation->setChecked(false);
+        positionSignalNum=true;
+        ui->fixedBtn->setStyleSheet(QString("image: url(:/assets/icon/unlock.png)"));
+
+    }
+
     QPoint pos= this->pos();
     animation_random_move = new QPropertyAnimation(this, "geometry");
     animation_random_move->setDuration(RANDOM_ANIMATION_TIME);
@@ -49,10 +57,14 @@ void MainWindow::randomMove(bool checked){
     animation_random_move->setStartValue(QRect(pos.x(),pos.y(),
                                                width(), height()));
     animation_random_move->setEndValue(QRect(XLCR[xRandomNum],YTCB[yRandomNum],width(), height()));
-    if(checked){
-        animation_random_move->start();
-    }
 
+    if(checked)
+    {
+        animation_random_move->start();
+        actionFixedLocation->setChecked(true);
+        positionSignalNum=false;
+        ui->fixedBtn->setStyleSheet(QString("image: url(:/assets/icon/lock.png)"));
+    }
 
     connect(animation_random_move, &QPropertyAnimation::finished, this,[=](){
 
@@ -63,8 +75,9 @@ void MainWindow::randomMove(bool checked){
                                                    width(), height()));
         animation_random_move->setEndValue(QRect(XLCR[xRandomNum],YTCB[yRandomNum],width(), height()));
 
-        if(checked)
+        //if(checked)
         animation_random_move->start();
+
 
     });
 
