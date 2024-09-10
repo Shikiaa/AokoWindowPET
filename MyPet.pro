@@ -11,14 +11,15 @@ CONFIG += c++17
 SOURCES += \
     changePosition.cpp \
     main.cpp \
-    mainwindow.cpp \
-    setMenu.cpp
+    mainWindow.cpp \
+    setMenu.cpp \
+    tools_mainWindow.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainWindow.h
 
 FORMS += \
-    mainwindow.ui
+    mainWindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -29,3 +30,5 @@ RESOURCES += \
     person.qrc
 
 RC_FILE += logo.rc
+
+STATECHARTS +=

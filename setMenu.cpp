@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "mainWindow.h"
+#include "ui_mainWindow.h"
 
 
 void MainWindow::initMenu()
@@ -82,7 +82,7 @@ void MainWindow::initMenu()
     });
 
 
-    //锁定角色
+    //鼠标锁定
     connect(actionFixedLocation,&QAction::triggered,this,[=](bool checked){
         if (checked)
         {
@@ -171,6 +171,15 @@ void MainWindow::initMenu()
 
 
     //关闭
-    connect(actionExit,&QAction::triggered,this,&MainWindow::close);
+    connect(actionExit,&QAction::triggered,this,[=](){
+
+        int reply;
+        reply = QMessageBox::question(this, "警告", "是否关闭?",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            this->close();
+        }
+    });
+
 
 }

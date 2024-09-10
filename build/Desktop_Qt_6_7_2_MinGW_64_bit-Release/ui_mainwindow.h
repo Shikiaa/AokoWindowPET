@@ -1,5 +1,5 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindow.ui'
+** Form generated from reading UI file 'mainWindow.ui'
 **
 ** Created by: Qt User Interface Compiler version 6.7.2
 **
@@ -46,12 +46,12 @@ public:
         differenceLabel->setStyleSheet(QString::fromUtf8("image: url(:/assets/aokohalf/01scarf/01scanf_all/1.png);"));
         fixedBtn = new QPushButton(centralwidget);
         fixedBtn->setObjectName("fixedBtn");
-        fixedBtn->setGeometry(QRect(30, 170, 61, 61));
+        fixedBtn->setGeometry(QRect(230, 90, 61, 61));
         fixedBtn->setStyleSheet(QString::fromUtf8("image: url(:/assets/icon/unlock.png);"));
         fixedBtn->setCheckable(true);
         homeBtn = new QPushButton(centralwidget);
         homeBtn->setObjectName("homeBtn");
-        homeBtn->setGeometry(QRect(30, 100, 61, 61));
+        homeBtn->setGeometry(QRect(20, 160, 61, 61));
         homeBtn->setStyleSheet(QString::fromUtf8("image: url(:/assets/icon/aoko3.png);"));
         MainWindow->setCentralWidget(centralwidget);
 

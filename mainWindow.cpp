@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "mainWindow.h"
+#include "ui_mainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     initMenu();
     initValues();
 
-    //定时器
+    //表情轮换定时器
     updateTimer =new QTimer(this);
     updateTimer->callOnTimeout(this,&MainWindow::updateAnimePicture);
     updateTimer->start(TIME_INTERVAL);
@@ -29,19 +29,19 @@ void MainWindow::initMyWindow()
     setWindowFlags(Qt::WindowType::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    this->setFixedSize(334,485);
+    this->setFixedSize(350,500);
     screenGeometry = QGuiApplication::primaryScreen()->geometry();
     move(screenGeometry.x() + (screenGeometry.width() - width()) / 2,
          screenGeometry.height() + height()); // 初始位置在屏幕底部之外
 
     // 创建动画
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "geometry");
+    animation = new QPropertyAnimation(this, "geometry");
     animation->setDuration(1200); // 动画持续时间1000毫秒
     animation->setStartValue(QRect(screenGeometry.x() + (screenGeometry.width() - width()+50),
                                    screenGeometry.height() + height(),
                                    width(), height()));
     animation->setEndValue(QRect(screenGeometry.x() + (screenGeometry.width()-width()+50),
-                                 screenGeometry.height() - height()-42,
+                                 screenGeometry.height() - height()-30,
                                  width(), height())); // 滑入到屏幕中央
     animation->setEasingCurve(QEasingCurve::OutQuad); // 使用平滑的缓出曲线
 
@@ -52,7 +52,7 @@ void MainWindow::initMyWindow()
 }
 
 
-//初始化参数
+//初始化重要参数
 void MainWindow::initValues()
 {
 
@@ -99,18 +99,11 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *ev)
     return false;
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
-
 //自动归位
 void MainWindow::on_homeBtn_clicked()
 {
-
-    animation_random_move->destroyed();
-    actionRandomMove->setChecked(false);
+    //默认属性
+    homeBtnDefaultAttribute();
     // 创建动画
     QPoint pos = this->pos();
     QPropertyAnimation *homeAnimation = new QPropertyAnimation(this, "geometry");
@@ -118,7 +111,7 @@ void MainWindow::on_homeBtn_clicked()
     homeAnimation->setStartValue(QRect(pos.x(),pos.y(),
                                    width(), height()));
     homeAnimation->setEndValue(QRect(screenGeometry.x() + (screenGeometry.width()-width()+50),
-                                 screenGeometry.height() - height()-42,
+                                 screenGeometry.height() - height()-30,
                                  width(), height())); // 滑入到屏幕中央
     homeAnimation->setEasingCurve(QEasingCurve::OutQuad); // 使用平滑的缓出曲线
 
@@ -126,5 +119,12 @@ void MainWindow::on_homeBtn_clicked()
     homeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
 
+}
+
+
+
+MainWindow::~MainWindow()
+{
+    delete ui;
 }
 
