@@ -25,6 +25,9 @@ MainWindow::MainWindow(QWidget *parent)
 //初始化窗口与出场
 void MainWindow::initMyWindow()
 {
+    //设置托盘
+    initTrayIcon();
+
     //隐藏边框和窗体底
     setWindowFlags(Qt::WindowType::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
@@ -106,7 +109,7 @@ void MainWindow::on_homeBtn_clicked()
     homeBtnDefaultAttribute();
     // 创建动画
     QPoint pos = this->pos();
-    QPropertyAnimation *homeAnimation = new QPropertyAnimation(this, "geometry");
+    homeAnimation = new QPropertyAnimation(this, "geometry");
     homeAnimation->setDuration(1100); // 动画持续时间1100毫秒
     homeAnimation->setStartValue(QRect(pos.x(),pos.y(),
                                    width(), height()));

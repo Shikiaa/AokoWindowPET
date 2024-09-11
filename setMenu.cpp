@@ -41,6 +41,7 @@ void MainWindow::initMenu()
     actionStartNotepad=menu->addAction("记事本");
     actionOpenGithub=menu->addAction("Github");
     menu->addSeparator();
+    actionHideTray=menu->addAction("隐藏到托盘");
     actionExit= menu->addAction("关闭");
 
     setContextMenuPolicy(Qt::CustomContextMenu);
@@ -169,6 +170,9 @@ void MainWindow::initMenu()
 
     });
 
+    //隐藏到托盘
+    connect(actionHideTray,&QAction::triggered,this,[=](){this->hide();});
+
 
     //关闭
     connect(actionExit,&QAction::triggered,this,[=](){
@@ -177,8 +181,10 @@ void MainWindow::initMenu()
         reply = QMessageBox::question(this, "警告", "是否关闭?",
                                       QMessageBox::Yes|QMessageBox::No);
         if (reply == QMessageBox::Yes) {
+
             this->close();
         }
+
     });
 
 

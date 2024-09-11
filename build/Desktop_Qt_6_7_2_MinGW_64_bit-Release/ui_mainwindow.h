@@ -31,7 +31,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(329, 504);
+        MainWindow->resize(318, 496);
         MainWindow->setStyleSheet(QString::fromUtf8(""));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
@@ -46,12 +46,12 @@ public:
         differenceLabel->setStyleSheet(QString::fromUtf8("image: url(:/assets/aokohalf/01scarf/01scanf_all/1.png);"));
         fixedBtn = new QPushButton(centralwidget);
         fixedBtn->setObjectName("fixedBtn");
-        fixedBtn->setGeometry(QRect(230, 90, 61, 61));
+        fixedBtn->setGeometry(QRect(230, 80, 61, 61));
         fixedBtn->setStyleSheet(QString::fromUtf8("image: url(:/assets/icon/unlock.png);"));
         fixedBtn->setCheckable(true);
         homeBtn = new QPushButton(centralwidget);
         homeBtn->setObjectName("homeBtn");
-        homeBtn->setGeometry(QRect(20, 160, 61, 61));
+        homeBtn->setGeometry(QRect(30, 50, 61, 61));
         homeBtn->setStyleSheet(QString::fromUtf8("image: url(:/assets/icon/aoko3.png);"));
         MainWindow->setCentralWidget(centralwidget);
 

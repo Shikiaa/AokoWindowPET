@@ -39,11 +39,13 @@ public:
     void initMyWindow(); //初始化主窗口
     void initValues(); //初始化全局参数
     void initMenu(); //初始化菜单
+    void initTrayIcon(); //初始化托盘
 
 
 
     void updateAnimePicture(); //更新差分表情
     void randomMove(bool checked);//随机移动
+    void setTrayIconMenu(); //设置托盘菜单
 
     /*---工具函数，便于随时设置------------*/
     void mouseLock();//鼠标解锁
@@ -57,6 +59,7 @@ public:
 
 private slots:
     void on_homeBtn_clicked();//自动归位右下角
+    void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
 
 private:
     Ui::MainWindow *ui;
@@ -65,6 +68,7 @@ private:
     QRect screenGeometry; //获取屏幕位置
     QProcess* process; //进程
     QPropertyAnimation* animation;
+    QPropertyAnimation* homeAnimation;
     QPropertyAnimation* animation_start; //随机线性移动的起始
     QPropertyAnimation* animation_random_move;
     QMessageBox* closeMessageBox;
@@ -82,10 +86,15 @@ private:
     QAction* actionStartCalc; //调用计算器
     QAction* actionStartNotepad; //打开记事本
     QAction* actionOpenGithub; //打开Github
+    QAction* actionHideTray; //隐藏到托盘
     QAction* actionExit; //退出
     QActionGroup *setClothsActionGroup;//创建更换套装选项组
 
-    QSystemTrayIcon *trayIcon;//托盘图标属性
+    QSystemTrayIcon* trayIcon;//托盘图标属性
+    QMenu* trayIconMenu;//托盘菜单
+    QAction* trayIconQuitAction; //退出程序
+    QAction* trayIconShowAction; //显示角色
+
 
     std::vector<int> XLCR; //屏幕左上为原点 x方向左中右 LCR
     std::vector<int> YTCB; //y方向上心下 TCR  这样就有了九个随机位置

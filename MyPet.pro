@@ -13,6 +13,7 @@ SOURCES += \
     main.cpp \
     mainWindow.cpp \
     setMenu.cpp \
+    setTrayIcon.cpp \
     tools_mainWindow.cpp
 
 HEADERS += \
