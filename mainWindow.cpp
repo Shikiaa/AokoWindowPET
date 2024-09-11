@@ -68,7 +68,7 @@ void MainWindow::initValues()
     //Y轴
     YTCB.push_back(screenGeometry.y());
     YTCB.push_back(screenGeometry.center().y()- height() / 2);
-    YTCB.push_back(screenGeometry.height() - height()-42);
+    YTCB.push_back(screenGeometry.height() - height()-30);
 
 
 

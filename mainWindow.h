@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #define TIME_INTERVAL 1200 //自动归位动画的时间毫秒值
-#define RANDOM_ANIMATION_TIME 6000 //随机移动动画的毫秒值
+#define RANDOM_ANIMATION_TIME 2000 //随机移动动画的毫秒值
 
 #include <QGraphicsDropShadowEffect>
 #include <QPropertyAnimation>
@@ -73,22 +73,31 @@ private:
     QPropertyAnimation* animation_random_move;
     QMessageBox* closeMessageBox;
 
-    QMenu* menu; //主菜单
+    QMenu* menu; //右键主菜单
     QMenu* clothsSetMenu; //更换套装副菜单
-    QAction* actionRandomMove; //随机移动的动作
+    QMenu* randomMoveSpeedSetMenu;//设置随机移动速度的副菜单
+    QAction* actionRandomMove; //随机移动
+
     QAction* actionExpression; //控制差分表情
     QAction* actionFixedLocation; //鼠标锁定
+
+    QActionGroup* setClothsActionGroup;//创建更换套装选项组
     QAction* actionSet_01; //第一套衣服，下同理
     QAction* actionSet_02;
     QAction* actionSet_03;
     QAction* actionSet_04;
+
     QAction* actionSetTop; //置顶
     QAction* actionStartCalc; //调用计算器
     QAction* actionStartNotepad; //打开记事本
     QAction* actionOpenGithub; //打开Github
     QAction* actionHideTray; //隐藏到托盘
-    QAction* actionExit; //退出
-    QActionGroup *setClothsActionGroup;//创建更换套装选项组
+    QAction* actionExit;    //退出
+
+    QActionGroup* setRandomMoveSpeedGroup;//设置随即移动的速度的选项组
+    QAction* moveSpeedFast;
+    QAction* moveSpeedMid;
+    QAction* moveSpeedLow;
 
     QSystemTrayIcon* trayIcon;//托盘图标属性
     QMenu* trayIconMenu;//托盘菜单

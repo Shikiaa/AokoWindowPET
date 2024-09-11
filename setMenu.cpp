@@ -6,9 +6,9 @@ void MainWindow::initMenu()
 {
 
     menu=new QMenu(this);
-    actionExpression = menu->addAction("表情轮换");
+    actionExpression = menu->addAction("所有表情轮换");
     actionExpression->setCheckable(true);
-    actionExpression->setChecked(true);
+    actionExpression->setChecked(false);
 
     actionFixedLocation = menu->addAction("鼠标锁定");
     actionFixedLocation->setCheckable(true);
@@ -17,7 +17,13 @@ void MainWindow::initMenu()
     actionRandomMove = menu->addAction("随机移动");
     actionRandomMove->setCheckable(true);
     actionRandomMove->setChecked(false);
-
+    randomMoveSpeedSetMenu=menu->addMenu("移动速度");
+    setRandomMoveSpeedGroup=new QActionGroup(this);
+    setRandomMoveSpeedGroup->setExclusive(true);
+    moveSpeedLow=randomMoveSpeedSetMenu->addAction("慢");
+    moveSpeedMid=randomMoveSpeedSetMenu->addAction("中");
+    moveSpeedFast=randomMoveSpeedSetMenu->addAction("快");
+    menu->addSeparator();
 
     clothsSetMenu=menu->addMenu("更换衣服套装");
     setClothsActionGroup = new QActionGroup(this);
