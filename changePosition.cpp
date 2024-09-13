@@ -48,7 +48,7 @@ void MainWindow::randomMove(bool checked){
 
     QPoint pos= this->pos();
     animation_random_move = new QPropertyAnimation(this, "geometry");
-    animation_random_move->setDuration(RANDOM_ANIMATION_TIME);
+    animation_random_move->setDuration(randomMoveSpeed);
     animation_random_move->setEasingCurve(QEasingCurve::OutQuad);
     xRandomNum = QRandomGenerator::global()->bounded(3);
     yRandomNum = QRandomGenerator::global()->bounded(3);
@@ -69,6 +69,7 @@ void MainWindow::randomMove(bool checked){
         QPoint pos = this->pos();
         xRandomNum = QRandomGenerator::global()->bounded(3);
         yRandomNum = QRandomGenerator::global()->bounded(3);
+        animation_random_move->setDuration(randomMoveSpeed);
         animation_random_move->setStartValue(QRect(pos.x(),pos.y(),
                                                    width(), height()));
         animation_random_move->setEndValue(QRect(XLCR[xRandomNum],YTCB[yRandomNum],width(), height()));

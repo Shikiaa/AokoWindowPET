@@ -109,6 +109,7 @@ private:
     std::vector<int> YTCB; //y方向上心下 TCR  这样就有了九个随机位置
     int xRandomNum; //用于产生x轴的随机方向的信号数值，下同理
     int yRandomNum; //y轴
+    int randomMoveSpeed; //随机移动速度
     bool positionSignalNum=true; //鼠标锁定信号值
     int curTime=1; //用于选择差分表情的信号数值
 

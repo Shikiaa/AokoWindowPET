@@ -18,15 +18,24 @@ void MainWindow::initMenu()
     actionRandomMove->setCheckable(true);
     actionRandomMove->setChecked(false);
     randomMoveSpeedSetMenu=menu->addMenu("移动速度");
-    setRandomMoveSpeedGroup=new QActionGroup(this);
+
+    setRandomMoveSpeedGroup=new QActionGroup(menu);
     setRandomMoveSpeedGroup->setExclusive(true);
     moveSpeedLow=randomMoveSpeedSetMenu->addAction("慢");
+    moveSpeedLow->setCheckable(true);
+    setRandomMoveSpeedGroup->addAction(moveSpeedLow);
     moveSpeedMid=randomMoveSpeedSetMenu->addAction("中");
+    moveSpeedMid->setCheckable(true);
+    moveSpeedMid->setChecked(true);
+    setRandomMoveSpeedGroup->addAction(moveSpeedMid);
     moveSpeedFast=randomMoveSpeedSetMenu->addAction("快");
+    moveSpeedFast->setCheckable(true);
+    setRandomMoveSpeedGroup->addAction(moveSpeedFast);
+
     menu->addSeparator();
 
     clothsSetMenu=menu->addMenu("更换衣服套装");
-    setClothsActionGroup = new QActionGroup(this);
+    setClothsActionGroup = new QActionGroup(menu);
     setClothsActionGroup->setExclusive(true);
     actionSet_01=clothsSetMenu->addAction("围巾校服");
     actionSet_01->setActionGroup(setClothsActionGroup);
@@ -61,30 +70,14 @@ void MainWindow::initMenu()
 
         if(checked)
         {
+            updateTimer =new QTimer(this);
+            updateTimer->callOnTimeout(this,&MainWindow::updateAnimePicture);
             updateTimer->start(TIME_INTERVAL);
 
         }else
         {
             updateTimer->stop();
         }
-
-    });
-
-
-    //置顶
-    connect(actionSetTop,&QAction::triggered,this,[=](bool checked){
-
-        if(checked)
-        {
-            this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
-
-        }else
-        {
-
-            this->setWindowFlags(this->windowFlags() & ~Qt::WindowStaysOnTopHint);
-
-        }
-        this->show();
 
     });
 
@@ -107,6 +100,56 @@ void MainWindow::initMenu()
 
 
     });
+
+
+    //随机运动
+    connect(actionRandomMove,&QAction::triggered,this,[=](bool checked){
+
+        randomMove(checked);
+
+    });
+
+    //移动速度
+    connect(moveSpeedLow,&QAction::triggered,this,[=](){
+
+        randomMoveSpeed=8000;
+
+    });
+    connect(moveSpeedMid,&QAction::triggered,this,[=](){
+
+        randomMoveSpeed=4000;
+
+    });
+    connect(moveSpeedFast,&QAction::triggered,this,[=](){
+
+        randomMoveSpeed=2000;
+
+    });
+
+
+
+    //置顶
+    connect(actionSetTop,&QAction::triggered,this,[=](bool checked){
+
+        if(checked)
+        {
+            this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
+
+        }else
+        {
+
+            this->setWindowFlags(this->windowFlags() & ~Qt::WindowStaysOnTopHint);
+
+        }
+        this->show();
+
+    });
+
+
+
+
+
+
 
     //调用计算器
     connect(actionStartCalc,&QAction::triggered,this,[=](){
@@ -135,14 +178,10 @@ void MainWindow::initMenu()
 
     });
 
-    //随机运动
-    connect(actionRandomMove,&QAction::triggered,this,[=](bool checked){
-
-            randomMove(checked);
-
-    });
 
 
+
+    //更换套装
     connect(actionSet_01,&QAction::triggered,this,[=](){
 
 
@@ -150,9 +189,6 @@ void MainWindow::initMenu()
 
 
     });
-
-
-
     connect(actionSet_02,&QAction::triggered,this,[=](){
 
 
@@ -160,7 +196,6 @@ void MainWindow::initMenu()
 
 
     });
-
     connect(actionSet_03,&QAction::triggered,this,[=](){
 
 
@@ -175,6 +210,9 @@ void MainWindow::initMenu()
 
 
     });
+
+
+
 
     //隐藏到托盘
     connect(actionHideTray,&QAction::triggered,this,[=](){this->hide();});

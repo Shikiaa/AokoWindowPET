@@ -12,11 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     initMenu();
     initValues();
 
-    //表情轮换定时器
-    updateTimer =new QTimer(this);
-    updateTimer->callOnTimeout(this,&MainWindow::updateAnimePicture);
-    updateTimer->start(TIME_INTERVAL);
-
     this->installEventFilter(this);
 
 
@@ -70,18 +65,17 @@ void MainWindow::initValues()
     YTCB.push_back(screenGeometry.center().y()- height() / 2);
     YTCB.push_back(screenGeometry.height() - height()-30);
 
-
+    randomMoveSpeed=4000;
 
 }
 
-
+//更新差分图片
 void MainWindow::updateAnimePicture()
 {
-    //更新差分图片
+
     ui->differenceLabel->setStyleSheet(QString("image: url(:/assets/aokohalf/01scarf/01scanf_all/%1.png);").arg(this->curTime));
     this->curTime=(this->curTime+1)%29;
 }
-
 
 
 //事件监听鼠标位置，移动人物
@@ -101,6 +95,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *ev)
     (void)watched;
     return false;
 }
+
 
 //自动归位
 void MainWindow::on_homeBtn_clicked()

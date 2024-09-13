@@ -124,8 +124,6 @@ debug/qrc_person.cpp: ../../person.qrc \
 		../../assets/icon/aoko3.png \
 		../../assets/icon/unlock.png \
 		../../assets/icon/lock.png \
-		../../assets/icon/aoko1.png \
-		../../assets/icon/aoko2.png \
 		../../assets/aokohalf/02.png \
 		../../assets/aokohalf/04.png \
 		../../assets/aokohalf/03.png \
