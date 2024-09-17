@@ -1,0 +1,10 @@
+debug/FocusClock.o
+debug/MainWindow.o
+debug/changePosition.o
+debug/main.o
+debug/setMenu.o
+debug/setTrayIcon.o
+debug/toolsMainWindow.o
+debug/qrc_person.o
+debug/moc_FocusClock.o
+debug/moc_MainWindow.o

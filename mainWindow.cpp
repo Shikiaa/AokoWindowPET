@@ -1,5 +1,5 @@
-#include "mainWindow.h"
-#include "ui_mainWindow.h"
+#include "MainWindow.h"
+#include "ui_MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -27,7 +27,7 @@ void MainWindow::initMyWindow()
     setWindowFlags(Qt::WindowType::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    this->setFixedSize(350,500);
+    this->resize(350,438);
     screenGeometry = QGuiApplication::primaryScreen()->geometry();
     move(screenGeometry.x() + (screenGeometry.width() - width()) / 2,
          screenGeometry.height() + height()); // 初始位置在屏幕底部之外
@@ -67,15 +67,12 @@ void MainWindow::initValues()
 
     randomMoveSpeed=4000;
 
+    updateTimer =new QTimer(this);
+
 }
 
-//更新差分图片
-void MainWindow::updateAnimePicture()
-{
 
-    ui->differenceLabel->setStyleSheet(QString("image: url(:/assets/aokohalf/01scarf/01scanf_all/%1.png);").arg(this->curTime));
-    this->curTime=(this->curTime+1)%29;
-}
+
 
 
 //事件监听鼠标位置，移动人物
@@ -96,6 +93,14 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *ev)
     return false;
 }
 
+
+void MainWindow::updateAnimePicture()
+{
+
+    ui->differenceLabel->setStyleSheet(QString("image: url(:/assets/aokohalf/01scarf/01scanf_all/%1.png);").arg(this->curTime));
+    this->curTime=(this->curTime+1)%29;
+
+}
 
 //自动归位
 void MainWindow::on_homeBtn_clicked()

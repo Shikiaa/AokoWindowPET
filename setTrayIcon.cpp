@@ -1,5 +1,5 @@
-#include "ui_mainWindow.h"
-#include "mainWindow.h"
+#include "ui_MainWindow.h"
+#include "MainWindow.h"
 
 void MainWindow::initTrayIcon(){
 

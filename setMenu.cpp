@@ -1,11 +1,23 @@
-#include "mainWindow.h"
-#include "ui_mainWindow.h"
-
+#include "MainWindow.h"
+#include "ui_MainWindow.h"
+#include "FocusClock.h"
+#include "ui_FocusClock.h"
 
 void MainWindow::initMenu()
 {
 
     menu=new QMenu(this);
+    verticalPaintingModeMenu=menu->addMenu("设置立绘模式");
+    setVerticalPaintingModeGroup=new QActionGroup(verticalPaintingModeMenu);
+    setVerticalPaintingModeGroup->setExclusive(true);
+    actionHalfBody=verticalPaintingModeMenu->addAction("半身立绘");
+    actionHalfBody->setCheckable(true);
+    actionHalfBody->setChecked(true);
+    setVerticalPaintingModeGroup->addAction(actionHalfBody);
+    actionWholebody=verticalPaintingModeMenu->addAction("全身立绘");
+    actionWholebody->setCheckable(true);
+    setVerticalPaintingModeGroup->addAction(actionWholebody);
+
     actionExpression = menu->addAction("所有表情轮换");
     actionExpression->setCheckable(true);
     actionExpression->setChecked(false);
@@ -17,8 +29,8 @@ void MainWindow::initMenu()
     actionRandomMove = menu->addAction("随机移动");
     actionRandomMove->setCheckable(true);
     actionRandomMove->setChecked(false);
-    randomMoveSpeedSetMenu=menu->addMenu("移动速度");
 
+    randomMoveSpeedSetMenu=menu->addMenu("移动速度");
     setRandomMoveSpeedGroup=new QActionGroup(menu);
     setRandomMoveSpeedGroup->setExclusive(true);
     moveSpeedLow=randomMoveSpeedSetMenu->addAction("慢");
@@ -37,14 +49,39 @@ void MainWindow::initMenu()
     clothsSetMenu=menu->addMenu("更换衣服套装");
     setClothsActionGroup = new QActionGroup(menu);
     setClothsActionGroup->setExclusive(true);
-    actionSet_01=clothsSetMenu->addAction("围巾校服");
-    actionSet_01->setActionGroup(setClothsActionGroup);
-    actionSet_02=clothsSetMenu->addAction("家居便服");
-    actionSet_02->setActionGroup(setClothsActionGroup);
-    actionSet_03=clothsSetMenu->addAction("蓝领毛衣");
-    actionSet_03->setActionGroup(setClothsActionGroup);
-    actionSet_04=clothsSetMenu->addAction("围巾大衣");
-    actionSet_04->setActionGroup(setClothsActionGroup);
+    actionSet_01=clothsSetMenu->addAction("(半)围巾校服");
+    setClothsActionGroup->addAction(actionSet_01);
+    actionSet_02=clothsSetMenu->addAction("(半)家居便服");
+    setClothsActionGroup->addAction(actionSet_02);
+    actionSet_03=clothsSetMenu->addAction("(半)蓝领毛衣😍");
+    setClothsActionGroup->addAction(actionSet_03);
+    actionSet_04=clothsSetMenu->addAction("(半)围巾大衣");
+    setClothsActionGroup->addAction(actionSet_04);
+    actionSet_05=clothsSetMenu->addAction("(半)白羽绒");
+    setClothsActionGroup->addAction(actionSet_05);
+    clothsSetMenu->addSeparator();
+    actionSet_b011=clothsSetMenu->addAction("(全)红连衣裙长黑靴");
+    setClothsActionGroup->addAction(actionSet_b011);
+    actionSet_b01=clothsSetMenu->addAction("(全)红连衣裙黑裤袜");
+    setClothsActionGroup->addAction(actionSet_b01);
+    actionSet_b021=clothsSetMenu->addAction("(全)白高领毛衣黑短裙过膝袜雪地靴");
+    setClothsActionGroup->addAction(actionSet_b021);
+    actionSet_b02=clothsSetMenu->addAction("(全)白羽绒红短裙长黑靴");
+    setClothsActionGroup->addAction(actionSet_b02);
+    actionSet_b03=clothsSetMenu->addAction("(全)白毛衣红短裙小皮鞋");
+    setClothsActionGroup->addAction(actionSet_b03);
+    actionSet_b04=clothsSetMenu->addAction("(全)蓝高领毛衣灰牛仔蓝帆布鞋");
+    setClothsActionGroup->addAction(actionSet_b04);
+    actionSet_b051=clothsSetMenu->addAction("(全)三咲学园校服黑及膝袜");
+    setClothsActionGroup->addAction(actionSet_b051);
+    actionSet_b052=clothsSetMenu->addAction("(全)三咲学园校服格子围巾黑及膝袜");
+    setClothsActionGroup->addAction(actionSet_b052);
+    actionSet_b05=clothsSetMenu->addAction("(全)三咲学园校服小皮鞋");
+    setClothsActionGroup->addAction(actionSet_b05);
+    actionSet_b06=clothsSetMenu->addAction("(全)格子围巾大衣短裙黑及膝袜");
+    setClothsActionGroup->addAction(actionSet_b06);
+    actionSet_b07=clothsSetMenu->addAction("(全)红发露脐蓝牛仔");
+    setClothsActionGroup->addAction(actionSet_b07);
 
 
     menu->addSeparator();
@@ -52,6 +89,7 @@ void MainWindow::initMenu()
     actionSetTop->setCheckable(true);
     actionSetTop->setChecked(true);
     menu->addSeparator();
+    actionFocusClock=menu->addAction("专注时钟");
     actionStartCalc=menu->addAction("系统计算器");
     actionStartNotepad=menu->addAction("记事本");
     actionOpenGithub=menu->addAction("Github");
@@ -59,10 +97,90 @@ void MainWindow::initMenu()
     actionHideTray=menu->addAction("隐藏到托盘");
     actionExit= menu->addAction("关闭");
 
+    actionSet_b01->setEnabled(false);
+    actionSet_b011->setEnabled(false);
+    actionSet_b02->setEnabled(false);
+    actionSet_b021->setEnabled(false);
+    actionSet_b03->setEnabled(false);
+    actionSet_b04->setEnabled(false);
+    actionSet_b05->setEnabled(false);
+    actionSet_b051->setEnabled(false);
+    actionSet_b052->setEnabled(false);
+    actionSet_b06->setEnabled(false);
+    actionSet_b07->setEnabled(false);
+
+
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &QWidget::customContextMenuRequested, [=]() {
         menu->exec(QCursor::pos());
     });
+
+
+    //半身立绘
+    connect(actionHalfBody,&QAction::triggered,this,[=](bool checked){
+
+        actionExpression->setEnabled(true);
+        actionSet_01->setEnabled(true);
+        actionSet_02->setEnabled(true);
+        actionSet_03->setEnabled(true);
+        actionSet_04->setEnabled(true);
+        actionSet_05->setEnabled(true);
+
+        actionSet_b01->setEnabled(false);
+        actionSet_b011->setEnabled(false);
+        actionSet_b02->setEnabled(false);
+        actionSet_b021->setEnabled(false);
+        actionSet_b03->setEnabled(false);
+        actionSet_b04->setEnabled(false);
+        actionSet_b05->setEnabled(false);
+        actionSet_b051->setEnabled(false);
+        actionSet_b052->setEnabled(false);
+        actionSet_b06->setEnabled(false);
+        actionSet_b07->setEnabled(false);
+        MainWindow::resize(350,438);
+        ui->label->resize(291,411);
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/03.png)"));
+        ui->differenceLabel->setStyleSheet("image: url(:/assets/aokohalf/01scarf/01scanf_all/14.png)");
+
+        on_homeBtn_clicked();
+
+    });
+
+    //全身立绘
+    connect(actionWholebody,&QAction::triggered,this,[=](){
+
+        actionExpression->setEnabled(false);
+        if(updateTimer->isActive()){
+            actionExpression->setChecked(false);
+            updateTimer->stop();
+        }
+        actionSet_01->setEnabled(false);
+        actionSet_02->setEnabled(false);
+        actionSet_03->setEnabled(false);
+        actionSet_04->setEnabled(false);
+        actionSet_05->setEnabled(false);
+
+        actionSet_b01->setEnabled(true);
+        actionSet_b011->setEnabled(true);
+        actionSet_b02->setEnabled(true);
+        actionSet_b021->setEnabled(true);
+        actionSet_b03->setEnabled(true);
+        actionSet_b04->setEnabled(true);
+        actionSet_b05->setEnabled(true);
+        actionSet_b051->setEnabled(true);
+        actionSet_b052->setEnabled(true);
+        actionSet_b06->setEnabled(true);
+        actionSet_b07->setEnabled(true);
+
+        ui->differenceLabel->setStyleSheet("QLabel { }");
+        MainWindow::resize(350,620);
+        ui->label->resize(291,600);
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b07.png)"));
+
+        on_homeBtn_clicked();
+
+    });
+
 
 
     //更换差分表情
@@ -70,7 +188,6 @@ void MainWindow::initMenu()
 
         if(checked)
         {
-            updateTimer =new QTimer(this);
             updateTimer->callOnTimeout(this,&MainWindow::updateAnimePicture);
             updateTimer->start(TIME_INTERVAL);
 
@@ -146,7 +263,21 @@ void MainWindow::initMenu()
     });
 
 
+    connect(actionFocusClock,&QAction::triggered,this,[=](){
 
+
+        messageBoxReply = QMessageBox::question(this, "温馨提示", "是否打开专注时钟?",
+                                                QMessageBox::Yes|QMessageBox::No);
+        if (messageBoxReply == QMessageBox::Yes) {
+
+            FocusClock* fc=new FocusClock();
+            fc->createFocusClock();
+
+
+        }
+
+
+    });
 
 
 
@@ -211,6 +342,35 @@ void MainWindow::initMenu()
 
     });
 
+    connect(actionSet_05,&QAction::triggered,this,[=](){
+
+
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/05.png);"));
+
+
+    });
+    connect(actionSet_b01,&QAction::triggered,this,[=](){
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b01.png);"));});
+    connect(actionSet_b011,&QAction::triggered,this,[=](){
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b01.1.png);"));});
+    connect(actionSet_b021,&QAction::triggered,this,[=](){
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b02.1.png);"));});
+    connect(actionSet_b02,&QAction::triggered,this,[=](){
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b02.png);"));});
+    connect(actionSet_b03,&QAction::triggered,this,[=](){
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b03.png);"));});
+    connect(actionSet_b04,&QAction::triggered,this,[=](){
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b04.png);"));});
+    connect(actionSet_b051,&QAction::triggered,this,[=](){
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b05.1.png);"));});
+    connect(actionSet_b052,&QAction::triggered,this,[=](){
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b05.2.png);"));});
+    connect(actionSet_b05,&QAction::triggered,this,[=](){
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b05.png);"));});
+    connect(actionSet_b06,&QAction::triggered,this,[=](){
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b06.png);"));});
+    connect(actionSet_b07,&QAction::triggered,this,[=](){
+        ui->label->setStyleSheet(QString("image: url(:/assets/aokohalf/systemic/b07.png);"));});
 
 
 
@@ -221,10 +381,10 @@ void MainWindow::initMenu()
     //关闭
     connect(actionExit,&QAction::triggered,this,[=](){
 
-        int reply;
-        reply = QMessageBox::question(this, "警告", "是否关闭?",
+
+        messageBoxReply = QMessageBox::question(this, "警告", "是否关闭?",
                                       QMessageBox::Yes|QMessageBox::No);
-        if (reply == QMessageBox::Yes) {
+        if (messageBoxReply == QMessageBox::Yes) {
 
             this->close();
         }

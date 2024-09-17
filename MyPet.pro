@@ -9,18 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    FocusClock.cpp \
+    MainWindow.cpp \
     changePosition.cpp \
     main.cpp \
-    mainWindow.cpp \
     setMenu.cpp \
     setTrayIcon.cpp \
-    tools_mainWindow.cpp
+    toolsMainWindow.cpp
 
 HEADERS += \
-    mainWindow.h
+    FocusClock.h \
+    MainWindow.h
 
 FORMS += \
-    mainWindow.ui
+    FocusClock.ui \
+    MainWindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -1,5 +1,5 @@
-#include "mainWindow.h"
-#include "ui_mainWindow.h"
+#include "MainWindow.h"
+#include "ui_MainWindow.h"
 
 
     //左screenGeometry.x(),

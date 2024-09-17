@@ -32,9 +32,23 @@
         <file>assets/icon/aoko3.png</file>
         <file>assets/icon/lock.png</file>
         <file>assets/icon/unlock.png</file>
-        <file>assets/aokohalf/02.png</file>
         <file>assets/aokohalf/03.png</file>
         <file>assets/aokohalf/04.png</file>
         <file>mainIconBig.ico</file>
+        <file>assets/aokohalf/02.png</file>
+        <file>assets/aokohalf/05.png</file>
+        <file>assets/aokohalf/systemic/b01.1.png</file>
+        <file>assets/aokohalf/systemic/b01.png</file>
+        <file>assets/aokohalf/systemic/b02.1.png</file>
+        <file>assets/aokohalf/systemic/b02.png</file>
+        <file>assets/aokohalf/systemic/b03.png</file>
+        <file>assets/aokohalf/systemic/b04.png</file>
+        <file>assets/aokohalf/systemic/b05.1.png</file>
+        <file>assets/aokohalf/systemic/b05.2.png</file>
+        <file>assets/aokohalf/systemic/b05.png</file>
+        <file>assets/aokohalf/systemic/b06.png</file>
+        <file>assets/aokohalf/systemic/b07.png</file>
+        <file>assets/icon/alice01.png</file>
+        <file>assets/bg/bg_alice01.png</file>
     </qresource>
 </RCC>
