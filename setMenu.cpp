@@ -1,7 +1,5 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "FocusClock.h"
-#include "ui_FocusClock.h"
 
 void MainWindow::initMenu()
 {
@@ -263,6 +261,7 @@ void MainWindow::initMenu()
     });
 
 
+    //打开与关闭时钟
     connect(actionFocusClock,&QAction::triggered,this,[=](){
 
 
@@ -270,17 +269,28 @@ void MainWindow::initMenu()
                                                 QMessageBox::Yes|QMessageBox::No);
         if (messageBoxReply == QMessageBox::Yes) {
 
-            FocusClock* fc=new FocusClock();
-            fc->createFocusClock();
-
+                fc=new FocusClock();
+                fc->show();
+                actionFocusClock->setEnabled(false);
 
         }
 
+        connect(fc->focusClockUi->closeBtn,&QPushButton::clicked,fc,[=](){
+
+            messageBoxReply = QMessageBox::question(this, "警告", "是否关闭专注时钟? 专注信息将会保存到本地",
+                                                    QMessageBox::Yes|QMessageBox::No);
+
+            if (messageBoxReply == QMessageBox::Yes) {
+
+                fc->close();
+                actionFocusClock->setEnabled(true);
+                delete fc;
+                fc=nullptr;
+            }
+
+        });
 
     });
-
-
-
 
     //调用计算器
     connect(actionStartCalc,&QAction::triggered,this,[=](){
@@ -381,15 +391,36 @@ void MainWindow::initMenu()
     //关闭
     connect(actionExit,&QAction::triggered,this,[=](){
 
+        if(fc!=nullptr){
 
-        messageBoxReply = QMessageBox::question(this, "警告", "是否关闭?",
-                                      QMessageBox::Yes|QMessageBox::No);
-        if (messageBoxReply == QMessageBox::Yes) {
+            messageBoxReply = QMessageBox::question(this, "警告", "是否连同专注时钟一同关闭? 专注信息将会保存到本地",
+                                                    QMessageBox::Yes|QMessageBox::No);
+            if (messageBoxReply == QMessageBox::Yes) {
 
-            this->close();
+
+                this->close();
+                fc->close();
+                delete fc;
+
+            }
+
+        }else{
+
+            messageBoxReply = QMessageBox::question(this, "警告", "是否关闭主窗口？",
+                                                    QMessageBox::Yes|QMessageBox::No);
+            if (messageBoxReply == QMessageBox::Yes) {
+
+
+                this->close();
+
+            }
+
         }
+
 
     });
 
 
 }
+
+

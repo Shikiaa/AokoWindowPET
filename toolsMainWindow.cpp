@@ -8,8 +8,6 @@ void MainWindow::mouseLock(){
     positionSignalNum=false;
     ui->fixedBtn->setStyleSheet(QString("image: url(:/assets/icon/lock.png)"));
 
-
-
 }
 
 

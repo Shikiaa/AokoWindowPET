@@ -4,6 +4,8 @@
 #define TIME_INTERVAL 1200 //自动归位动画的时间毫秒值
 #define RANDOM_ANIMATION_TIME 2000 //随机移动动画的毫秒值
 
+#include "FocusClock.h"
+#include "ui_FocusClock.h"
 #include <QGraphicsDropShadowEffect>
 #include <QPropertyAnimation>
 #include <QContextMenuEvent>
@@ -11,6 +13,7 @@
 #include <QRandomGenerator>
 #include <QSystemTrayIcon>
 #include <QActionGroup>
+#include <QSharedMemory>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QMouseEvent>
@@ -22,6 +25,8 @@
 #include <QDialog>
 #include <QTimer>
 #include <QMenu>
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -52,6 +57,7 @@ public:
     void mouseUnlock();//鼠标锁定
     void homeBtnDefaultAttribute();//每次点击"回家"键(归位键），默认设置的属性与行为
 
+    void test();
 
     bool eventFilter(QObject*watched ,QEvent* ev) override;//监测鼠标事件
 
@@ -60,6 +66,8 @@ public:
 private slots:
     void on_homeBtn_clicked();//自动归位右下角
     void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
+
+
 
 private:
     Ui::MainWindow *ui;
@@ -84,12 +92,12 @@ private:
     QAction* actionFixedLocation; //鼠标锁定
 
     QActionGroup* setClothsActionGroup;//创建更换套装选项组
-    QAction* actionSet_01; //第一套衣服，下同理
+    QAction* actionSet_01; //半身第一套衣服，下同理
     QAction* actionSet_02;
     QAction* actionSet_03;
     QAction* actionSet_04;
     QAction* actionSet_05;
-    QAction* actionSet_b011;
+    QAction* actionSet_b011;//全身
     QAction* actionSet_b01;
     QAction* actionSet_b021;
     QAction* actionSet_b02;
@@ -135,8 +143,8 @@ private:
     bool positionSignalNum=true; //鼠标锁定信号值
     int messageBoxReply;
     int curTime=1; //用于选择差分表情的信号数值
-
-
+    FocusClock* fc=nullptr;
+    Ui::FocusClock *fcUi=nullptr;
 };
 
 #endif // MAINWINDOW_H

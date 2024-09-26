@@ -7,13 +7,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
     initMyWindow();
     initMenu();
     initValues();
-
     this->installEventFilter(this);
-
 
 }
 
@@ -71,10 +68,6 @@ void MainWindow::initValues()
 
 }
 
-
-
-
-
 //事件监听鼠标位置，移动人物
 bool MainWindow::eventFilter(QObject *watched, QEvent *ev)
 {
@@ -117,17 +110,18 @@ void MainWindow::on_homeBtn_clicked()
                                  screenGeometry.height() - height()-30,
                                  width(), height())); // 滑入到屏幕中央
     homeAnimation->setEasingCurve(QEasingCurve::OutQuad); // 使用平滑的缓出曲线
-
     // 启动动画
     homeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
-
 }
-
 
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
+
+
 
