@@ -1,10 +1,13 @@
 #ifndef FOCUSCLOCK_H
 #define FOCUSCLOCK_H
 
+#include "Remind.h"
+#include "ui_Remind.h"
 
 #include <QPropertyAnimation>
 #include <QElapsedTimer>
 #include <QApplication>
+#include <QMessageBox>
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include <QFileDialog>
@@ -14,7 +17,6 @@
 #include <QScreen>
 #include <QWidget>
 #include <QTimer>
-
 #include <QUrl>
 
 namespace Ui {
@@ -54,7 +56,6 @@ protected:
     void enterEvent(QEnterEvent* event) override;
     void leaveEvent(QEvent* event) override;
 
-
 private slots:
 
     void on_saveRBtn_clicked();  //保存设置按钮
@@ -65,6 +66,8 @@ private slots:
     void on_finishFocusBtn_clicked(); //停止专注
 
     void on_ringBtn_clicked();
+
+    void on_hideBtn_clicked();
 
 private:
     void checkMousePosition();
@@ -90,14 +93,18 @@ private:
     QString currentTime;
     QRect screenGeometryClock;
     qint64 countDownTime;
+    remind* rm=nullptr;
+    Ui::remind* rmUi=nullptr;
 
 
     int workTime=0; //工作时间间隔
+    int tempWorkTime=0; //临时工作时间
     int allfocusTimes=0; //总专注次数
 
     int curfocusTimesMin=0; //本次专注分钟
     bool windowStatusValue=true;
     bool pauseBtnValue=true;
+    bool hideValue=false;
     int remainingTime=0;
 
 

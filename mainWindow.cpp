@@ -44,6 +44,8 @@ void MainWindow::initMyWindow()
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 
     this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
+
+
 }
 
 
@@ -65,6 +67,7 @@ void MainWindow::initValues()
     randomMoveSpeed=4000;
 
     updateTimer =new QTimer(this);
+
 
 }
 
@@ -114,6 +117,37 @@ void MainWindow::on_homeBtn_clicked()
     homeAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 
 }
+
+//鼠标锁定
+void MainWindow::mouseLock(){
+
+    actionFixedLocation->setChecked(true);
+    positionSignalNum=false;
+    ui->fixedBtn->setStyleSheet(QString("image: url(:/assets/icon/lock.png)"));
+
+}
+
+//鼠标解锁
+void MainWindow::mouseUnlock(){
+
+
+    actionFixedLocation->setChecked(false);
+    positionSignalNum=true;
+    ui->fixedBtn->setStyleSheet(QString("image: url(:/assets/icon/unlock.png)"));
+
+
+}
+
+//归位按钮的默认属性
+void MainWindow::homeBtnDefaultAttribute(){
+
+    //结束随机移动，并且锁定鼠标
+    actionRandomMove->setChecked(false);
+    mouseLock();
+
+
+}
+
 
 
 MainWindow::~MainWindow()

@@ -13,19 +13,21 @@ CONFIG += c++17
 SOURCES += \
     FocusClock.cpp \
     MainWindow.cpp \
+    Remind.cpp \
     changePosition.cpp \
     main.cpp \
     setMenu.cpp \
-    setTrayIcon.cpp \
-    toolsMainWindow.cpp
+    setTrayIcon.cpp
 
 HEADERS += \
     FocusClock.h \
-    MainWindow.h
+    MainWindow.h \
+    Remind.h
 
 FORMS += \
     FocusClock.ui \
-    MainWindow.ui
+    MainWindow.ui \
+    Remind.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

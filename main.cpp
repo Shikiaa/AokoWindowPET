@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include <QApplication>
 
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -11,8 +12,9 @@ int main(int argc, char *argv[])
         QMessageBox::warning(nullptr, "Warning", "已有程序运行");
         return 0; // 退出程序
     }
-    MainWindow w;
 
+
+    MainWindow w;
     w.setWindowIcon(QIcon(":/mainIconBig.ico"));
     w.show();
 

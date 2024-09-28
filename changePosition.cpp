@@ -34,7 +34,7 @@
     //screenGeometry.height() - height()-42
 
 
-
+//随机移动的函数
 void MainWindow::randomMove(bool checked){
 
 

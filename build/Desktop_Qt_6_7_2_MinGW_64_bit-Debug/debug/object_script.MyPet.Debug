@@ -1,5 +1,6 @@
 debug/FocusClock.o
 debug/MainWindow.o
+debug/Remind.o
 debug/changePosition.o
 debug/main.o
 debug/setMenu.o
@@ -8,3 +9,4 @@ debug/toolsMainWindow.o
 debug/qrc_person.o
 debug/moc_FocusClock.o
 debug/moc_MainWindow.o
+debug/moc_Remind.o

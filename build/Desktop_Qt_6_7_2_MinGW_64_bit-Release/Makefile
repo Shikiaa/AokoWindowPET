@@ -407,8 +407,11 @@ Makefile: ../../MyPet.pro ../../../../QT/6.7.2/mingw_64/mkspecs/win32-g++/qmake.
 		../../../../QT/6.7.2/mingw_64/mkspecs/features/yacc.prf \
 		../../../../QT/6.7.2/mingw_64/mkspecs/features/lex.prf \
 		../../MyPet.pro \
+		../../../../QT/6.7.2/mingw_64/lib/Qt6MultimediaWidgets.prl \
+		../../../../QT/6.7.2/mingw_64/lib/Qt6Multimedia.prl \
 		../../../../QT/6.7.2/mingw_64/lib/Qt6Widgets.prl \
 		../../../../QT/6.7.2/mingw_64/lib/Qt6Gui.prl \
+		../../../../QT/6.7.2/mingw_64/lib/Qt6Network.prl \
 		../../../../QT/6.7.2/mingw_64/lib/Qt6Core.prl \
 		../../../../QT/6.7.2/mingw_64/lib/Qt6EntryPoint.prl \
 		../../../../QT/6.7.2/mingw_64/mkspecs/features/build_pass.prf \
@@ -751,8 +754,11 @@ Makefile: ../../MyPet.pro ../../../../QT/6.7.2/mingw_64/mkspecs/win32-g++/qmake.
 ../../../../QT/6.7.2/mingw_64/mkspecs/features/yacc.prf:
 ../../../../QT/6.7.2/mingw_64/mkspecs/features/lex.prf:
 ../../MyPet.pro:
+../../../../QT/6.7.2/mingw_64/lib/Qt6MultimediaWidgets.prl:
+../../../../QT/6.7.2/mingw_64/lib/Qt6Multimedia.prl:
 ../../../../QT/6.7.2/mingw_64/lib/Qt6Widgets.prl:
 ../../../../QT/6.7.2/mingw_64/lib/Qt6Gui.prl:
+../../../../QT/6.7.2/mingw_64/lib/Qt6Network.prl:
 ../../../../QT/6.7.2/mingw_64/lib/Qt6Core.prl:
 ../../../../QT/6.7.2/mingw_64/lib/Qt6EntryPoint.prl:
 ../../../../QT/6.7.2/mingw_64/mkspecs/features/build_pass.prf:

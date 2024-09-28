@@ -57,11 +57,12 @@ public:
     void mouseUnlock();//鼠标锁定
     void homeBtnDefaultAttribute();//每次点击"回家"键(归位键），默认设置的属性与行为
 
-    void test();
 
     bool eventFilter(QObject*watched ,QEvent* ev) override;//监测鼠标事件
 
     ~MainWindow();
+
+
 
 private slots:
     void on_homeBtn_clicked();//自动归位右下角
@@ -131,6 +132,7 @@ private:
     QSystemTrayIcon* trayIcon;//托盘图标属性
     QMenu* trayIconMenu;//托盘菜单
     QAction* trayIconQuitAction; //退出程序
+    QAction* trayIconClockShowAction; //时钟展示
     QAction* trayIconShowAction; //显示角色
 
     //bool verticalPaintingModeValue=true;

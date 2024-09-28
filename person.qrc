@@ -50,5 +50,7 @@
         <file>assets/aokohalf/systemic/b07.png</file>
         <file>assets/icon/alice01.png</file>
         <file>assets/bg/bg_alice01.png</file>
+        <file>assets/icon/line.png</file>
+        <file>assets/icon/alice02.png</file>
     </qresource>
 </RCC>

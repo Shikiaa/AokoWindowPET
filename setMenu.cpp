@@ -1,6 +1,9 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
+
+
+//设置右键菜单
 void MainWindow::initMenu()
 {
 
@@ -261,7 +264,7 @@ void MainWindow::initMenu()
     });
 
 
-    //打开与关闭时钟
+    //打开时钟
     connect(actionFocusClock,&QAction::triggered,this,[=](){
 
 
@@ -272,25 +275,30 @@ void MainWindow::initMenu()
                 fc=new FocusClock();
                 fc->show();
                 actionFocusClock->setEnabled(false);
+                //关闭时钟
+                connect(fc->focusClockUi->closeBtn,&QPushButton::clicked,fc,[=](){
+
+                    messageBoxReply = QMessageBox::question(this, "警告", "是否关闭专注时钟? 专注信息将会保存到本地",
+                                                            QMessageBox::Yes|QMessageBox::No);
+
+                    if (messageBoxReply == QMessageBox::Yes) {
+
+                        fc->close();
+                        actionFocusClock->setEnabled(true);
+                        delete fc;
+                        fc=nullptr;
+                    }
+
+                });
+
+        }else {
+
 
         }
 
-        connect(fc->focusClockUi->closeBtn,&QPushButton::clicked,fc,[=](){
-
-            messageBoxReply = QMessageBox::question(this, "警告", "是否关闭专注时钟? 专注信息将会保存到本地",
-                                                    QMessageBox::Yes|QMessageBox::No);
-
-            if (messageBoxReply == QMessageBox::Yes) {
-
-                fc->close();
-                actionFocusClock->setEnabled(true);
-                delete fc;
-                fc=nullptr;
-            }
-
-        });
-
     });
+
+
 
     //调用计算器
     connect(actionStartCalc,&QAction::triggered,this,[=](){

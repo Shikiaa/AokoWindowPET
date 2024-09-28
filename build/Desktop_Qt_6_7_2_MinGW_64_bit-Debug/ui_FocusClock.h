@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
@@ -36,6 +37,7 @@ public:
     QPushButton *finishFocusBtn;
     QPushButton *pauseFocusBtn;
     QSpinBox *workTimeSpinBox;
+    QCheckBox *hideCheckBox;
     QWidget *tab_2;
     QLabel *label_7;
     QLabel *focusTimes;
@@ -50,6 +52,7 @@ public:
     QLabel *label_2;
     QLabel *musicLabel;
     QPushButton *helpBtn;
+    QPushButton *hideBtn;
 
     void setupUi(QWidget *FocusClock)
     {
@@ -82,10 +85,10 @@ public:
         ringBtn->setGeometry(QRect(80, 40, 91, 20));
         saveRBtn = new QRadioButton(focusSettingsTab);
         saveRBtn->setObjectName("saveRBtn");
-        saveRBtn->setGeometry(QRect(20, 70, 51, 21));
+        saveRBtn->setGeometry(QRect(10, 70, 51, 21));
         changeRBtn = new QRadioButton(focusSettingsTab);
         changeRBtn->setObjectName("changeRBtn");
-        changeRBtn->setGeometry(QRect(90, 70, 51, 21));
+        changeRBtn->setGeometry(QRect(70, 70, 51, 21));
         startFocusBtn = new QPushButton(focusSettingsTab);
         startFocusBtn->setObjectName("startFocusBtn");
         startFocusBtn->setGeometry(QRect(180, 70, 61, 21));
@@ -98,6 +101,9 @@ public:
         workTimeSpinBox = new QSpinBox(focusSettingsTab);
         workTimeSpinBox->setObjectName("workTimeSpinBox");
         workTimeSpinBox->setGeometry(QRect(80, 3, 71, 21));
+        hideCheckBox = new QCheckBox(focusSettingsTab);
+        hideCheckBox->setObjectName("hideCheckBox");
+        hideCheckBox->setGeometry(QRect(120, 70, 51, 21));
         tabWidget->addTab(focusSettingsTab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName("tab_2");
@@ -131,7 +137,7 @@ public:
         label_9->setStyleSheet(QString::fromUtf8("image: url(:/assets/icon/alice01.png);"));
         closeBtn = new QPushButton(FocusClock);
         closeBtn->setObjectName("closeBtn");
-        closeBtn->setGeometry(QRect(390, 0, 71, 31));
+        closeBtn->setGeometry(QRect(400, 90, 61, 21));
         label = new QLabel(FocusClock);
         label->setObjectName("label");
         label->setGeometry(QRect(370, 20, 16, 19));
@@ -147,6 +153,9 @@ public:
         helpBtn = new QPushButton(FocusClock);
         helpBtn->setObjectName("helpBtn");
         helpBtn->setGeometry(QRect(220, 0, 41, 23));
+        hideBtn = new QPushButton(FocusClock);
+        hideBtn->setObjectName("hideBtn");
+        hideBtn->setGeometry(QRect(330, 90, 61, 21));
         tabWidget->raise();
         showTimeLabel->raise();
         showTextLabel->raise();
@@ -158,6 +167,7 @@ public:
         label_2->raise();
         musicLabel->raise();
         helpBtn->raise();
+        hideBtn->raise();
 
         retranslateUi(FocusClock);
 
@@ -180,6 +190,7 @@ public:
         startFocusBtn->setText(QCoreApplication::translate("FocusClock", "start", nullptr));
         finishFocusBtn->setText(QCoreApplication::translate("FocusClock", "finish", nullptr));
         pauseFocusBtn->setText(QCoreApplication::translate("FocusClock", "pause", nullptr));
+        hideCheckBox->setText(QCoreApplication::translate("FocusClock", "hide", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(focusSettingsTab), QCoreApplication::translate("FocusClock", "\344\270\223\346\263\250\350\256\276\347\275\256(min)", nullptr));
         label_7->setText(QCoreApplication::translate("FocusClock", "\344\273\216\345\256\211\350\243\205\347\250\213\345\272\217\345\210\260\347\216\260\345\234\250\345\267\262\344\270\223\346\263\250:", nullptr));
         focusTimes->setText(QCoreApplication::translate("FocusClock", "null", nullptr));
@@ -195,6 +206,7 @@ public:
         label_2->setText(QCoreApplication::translate("FocusClock", "\345\275\223\345\211\215\351\223\203\345\243\260:", nullptr));
         musicLabel->setText(QCoreApplication::translate("FocusClock", "null", nullptr));
         helpBtn->setText(QCoreApplication::translate("FocusClock", "help", nullptr));
+        hideBtn->setText(QCoreApplication::translate("FocusClock", "hide", nullptr));
     } // retranslateUi
 
 };

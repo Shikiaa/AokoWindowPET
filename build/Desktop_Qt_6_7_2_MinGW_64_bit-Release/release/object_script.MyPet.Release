@@ -1,0 +1,11 @@
+release/FocusClock.o
+release/MainWindow.o
+release/Remind.o
+release/changePosition.o
+release/main.o
+release/setMenu.o
+release/setTrayIcon.o
+release/qrc_person.o
+release/moc_FocusClock.o
+release/moc_MainWindow.o
+release/moc_Remind.o

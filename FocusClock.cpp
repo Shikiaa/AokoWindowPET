@@ -48,10 +48,24 @@ void FocusClock::initFocusClock()
     focusClockUi->helpBtn->setToolTipDuration(10000);
     focusClockUi->helpBtn->show();
 
+    rm=new remind();
+
+    connect(focusClockUi->hideCheckBox, &QCheckBox::stateChanged, this, [=](int state){
+
+        if (state == Qt::Checked) {
+
+            hideValue=true;
+
+        } else {
+
+            hideValue=false;
+
+        }
+
+
+    });
+
 }
-
-
-
 
 
 //启动动画
@@ -132,7 +146,7 @@ void FocusClock::slideIn()
     }
 
 }
-//更新时钟
+//更新实时时间
 void FocusClock::updateClock()
 {
 
@@ -154,10 +168,12 @@ void FocusClock::startFocus()
     countdownTimer=new QTimer(this);
     countdownTimer->setInterval(1000);
     countDownTime=workTime;
+    tempWorkTime=workTime;
     focusClockUi->countDownTimeLabel->setText(QString::number(countDownTime/1000));
     workTimer->start();
     countTimer->start();
     countdownTimer->start();
+    if(hideValue){this->hide();};
     allfocusTimes++;
     QSettings settings("focusClock","AokoPet");
     settings.setValue("focusTimesSetting",allfocusTimes);
@@ -169,10 +185,16 @@ void FocusClock::startFocus()
 void FocusClock::workTimerOut()
 {
 
+
     musicPlayer->play();
+    rm->show();
+    rm->remindInitAnimation();
+    setInitPosition();
     qDebug()<<workTime/1000<<"s工作周期结束";
     focusClockUi->countDownTimeLabel->setText("0");
     finishFocus();
+    this->show();
+
 }
 
 
@@ -180,7 +202,9 @@ void FocusClock::workTimerOut()
 void FocusClock::countdownTimerOut()
 {
     countDownTime-=1000;
+    curfocusTimesMin++;
     focusClockUi->countDownTimeLabel->setText(QString::number(countDownTime/1000));
+
 }
 
 
@@ -245,12 +269,12 @@ void FocusClock::loadSettings()
 
 }
 
-
+//结束专注
 void FocusClock::finishFocus()
 {
 
-    curfocusTimesMin+=countTimer->elapsed();
-    allfocusTimesMin+=curfocusTimesMin/1000;
+
+    allfocusTimesMin+=curfocusTimesMin;
     QSettings settings("focusClock","AokoPet");
     settings.setValue("focusTimesMinSetting",allfocusTimesMin);
 
@@ -292,10 +316,13 @@ void FocusClock::finishFocus()
 
 }
 
-
+//析构函数
 FocusClock::~FocusClock()
 {
 
+    allfocusTimesMin+=curfocusTimesMin;
+    QSettings settings("focusClock","AokoPet");
+    settings.setValue("focusTimesMinSetting",allfocusTimesMin);
     delete focusClockUi;
 }
 
@@ -377,14 +404,14 @@ void FocusClock::on_pauseFocusBtn_clicked()
         workTimer->stop();
         countdownTimer->stop();
         qDebug()<<"工作时间暂停,计时停止";
-        remainingTime=workTime-countTimer->elapsed();
-        curfocusTimesMin=workTime-remainingTime;
+        remainingTime=tempWorkTime-countTimer->elapsed();
         pauseBtnValue=false;
     }else{
         focusClockUi->pauseFocusBtn->setText("pause");
         workTimer->start(remainingTime);
         countDownTime=remainingTime;
-        workTime=countDownTime;
+        focusClockUi->countDownTimeLabel->setText(QString::number(countDownTime/1000));
+        tempWorkTime=countDownTime;
         countdownTimer->start();
         qDebug()<<"工作时间开始，重新计时";
         countTimer->start();
@@ -417,5 +444,11 @@ void FocusClock::on_ringBtn_clicked()
     }
 
 
+}
+
+//隐藏按钮
+void FocusClock::on_hideBtn_clicked()
+{
+    this->hide();
 }
 
